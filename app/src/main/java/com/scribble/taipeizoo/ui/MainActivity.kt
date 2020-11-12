@@ -1,14 +1,11 @@
 package com.scribble.taipeizoo.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.scribble.taipeizoo.R
-import com.scribble.taipeizoo.data.repositories.ZooRepository
 import com.scribble.taipeizoo.databinding.ActivityMainBinding
-import com.scribble.taipeizoo.databinding.FragmentMainBinding
 import com.scribble.taipeizoo.ui.viewmodels.ZooViewModel
 
 /**
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.toolbar)
         val viewModel = ViewModelProvider(this).get(ZooViewModel::class.java)
-        viewModel.setListener(object: ZooViewModel.VMOnClickListener {
+        viewModel.setScrollListener(object: ZooViewModel.ScrollListener {
             override fun hideFab() {
                 binding.fab.hide()
             }

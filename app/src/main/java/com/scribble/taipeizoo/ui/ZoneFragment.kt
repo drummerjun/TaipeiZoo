@@ -42,6 +42,11 @@ class ZoneFragment(private val zone: Zone) : Fragment(), PlantClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ZooViewModel::class.java)
+        viewModel.setFabClickListener(object : ZooViewModel.FabClickListener {
+            override fun scrollToTop() {
+                binding.scroller.scrollTo(0, 0)
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -82,7 +87,6 @@ class ZoneFragment(private val zone: Zone) : Fragment(), PlantClickListener {
                 viewModel.hideFab()
             }
         }
-        viewModel.setAnchor(binding.scroller)
 
         (activity as? AppCompatActivity)?.supportActionBar?.run {
             title = zone.name

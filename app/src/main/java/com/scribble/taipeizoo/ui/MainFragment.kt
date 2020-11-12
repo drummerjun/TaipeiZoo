@@ -33,6 +33,11 @@ class MainFragment(private val zones: ArrayList<Zone>) : Fragment(), ZoneClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ZooViewModel::class.java)
+        viewModel.setFabClickListener(object : ZooViewModel.FabClickListener {
+            override fun scrollToTop() {
+                binding.zoneList.scrollToPosition(0)
+            }
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -70,7 +75,6 @@ class MainFragment(private val zones: ArrayList<Zone>) : Fragment(), ZoneClickLi
                     }
                 }
             })
-            viewModel.setAnchor(binding.zoneList)
         }
     }
 
