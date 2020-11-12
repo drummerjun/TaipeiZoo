@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">台北市立動物園</string>
+    <string name="ext_link">&lt;a href=%2$s>%1$s&lt;/a> </string>
+    <string name="link_label">在網頁開啟</string>
+    <string name="aka">別名\n%1$s</string>
+    <string name="brief">簡介\n%1$s</string>
+    <string name="features">辨認方式\n%1$s</string>
+    <string name="genus">屬\n%1$s</string>
+    <string name="family">科\n%1$s</string>
+    <string name="usage">功能性\n%1$s</string>
+    <string name="updated">最後更新：%1$s</string>
+    <string name="botanicals">植物資料</string>
+</resources>

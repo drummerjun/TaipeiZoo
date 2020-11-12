@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.scribble.taipeizoo.R"/>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="plant"
+            type="com.scribble.taipeizoo.data.models.Plant" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView app:image="@{plant.f_Pic01_URL}"
+                android:id="@+id/plant_image"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView android:id="@+id/plant_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@{TextUtils.isEmpty(plant.f_Name_Ch) ? plant.f_Name_Latin : plant.f_Name_Ch}"
+                app:layout_constraintTop_toBottomOf="@id/plant_image"/>
+            <TextView android:id="@+id/plant_name_en"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:text="@{plant.f_Name_En}"
+                app:layout_constraintTop_toBottomOf="@id/plant_name"/>
+            <TextView android:id="@+id/aka"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{context.getString(R.string.aka, plant.f_AlsoKnown)}"
+                app:layout_constraintTop_toBottomOf="@id/plant_name_en"/>
+            <TextView android:id="@+id/brief"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{context.getString(R.string.brief, plant.f_Brief)}"
+                app:layout_constraintTop_toBottomOf="@id/aka"/>
+            <TextView android:id="@+id/family"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{context.getString(R.string.family, plant.f_Family)}"
+                app:layout_constraintTop_toBottomOf="@id/brief"/>
+            <TextView android:id="@+id/genus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{context.getString(R.string.genus, plant.f_Genus)}"
+                app:layout_constraintTop_toBottomOf="@id/family"/>
+            <TextView android:id="@+id/features"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{String.format(@string/features, plant.f_Feature)}"
+                app:layout_constraintTop_toBottomOf="@id/genus"/>
+            <TextView android:id="@+id/usage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{String.format(@string/usage, plant.f_Function)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Function) ? View.GONE : View.VISIBLE}"
+                app:layout_constraintTop_toBottomOf="@id/features"/>
+            <TextView android:id="@+id/updated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:text="@{String.format(@string/updated, plant.f_Update)}"
+                app:layout_constraintTop_toBottomOf="@id/usage"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
+

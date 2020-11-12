@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="zone"
+            type="com.scribble.taipeizoo.data.models.Zone" />
+
+        <variable
+            name="viewModel"
+            type="com.scribble.taipeizoo.ui.viewmodels.ZooViewModel" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroller"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                tools:ignore="ContentDescription">
+
+                <ImageView
+                    android:id="@+id/zone_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="center"
+                    app:image="@{zone.imageUrl}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/zone_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:ellipsize="end"
+                    android:maxLines="6"
+                    android:minLines="2"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="@{zone.info}"
+                    app:layout_constraintTop_toBottomOf="@id/zone_image" />
+
+                <TextView
+                    android:id="@+id/zone_memo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingBottom="16dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="@{zone.memo}"
+                    app:layout_constraintEnd_toStartOf="@id/ext_link"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/zone_info" />
+
+                <TextView
+                    android:id="@+id/ext_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical|end"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="16dp"
+
+                    app:hyperlink="@{@string/ext_link(@string/link_label, zone.url)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/zone_memo"
+                    app:layout_constraintTop_toTopOf="@id/zone_memo"
+                    app:layout_constraintBottom_toBottomOf="@id/zone_memo"
+                    tools:text="@string/link_label" />
+
+<!--                <View android:id="@+id/manual_padding"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:background="@android:color/white"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/zone_memo"/>-->
+
+                <TextView
+                    android:id="@+id/title_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@android:color/white"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"
+                    android:text="@string/botanicals"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/zone_memo" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/plants_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical"
+                    android:background="@color/colorPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_label" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>
