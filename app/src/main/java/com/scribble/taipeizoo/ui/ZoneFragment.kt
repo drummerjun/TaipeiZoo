@@ -42,11 +42,6 @@ class ZoneFragment(private val zone: Zone) : Fragment(), PlantClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ZooViewModel::class.java)
-        viewModel.setFabClickListener(object : ZooViewModel.FabClickListener {
-            override fun scrollToTop() {
-                binding.scroller.scrollTo(0, 0)
-            }
-        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,6 +61,13 @@ class ZoneFragment(private val zone: Zone) : Fragment(), PlantClickListener {
             }
             binding.refresher.isRefreshing = false
         })
+
+        viewModel.clickLivedata.observe(viewLifecycleOwner, Observer { clicked ->
+            if (clicked) {
+                binding.scroller.scrollTo(0, 0)
+            }
+        })
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_zone, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -82,9 +84,9 @@ class ZoneFragment(private val zone: Zone) : Fragment(), PlantClickListener {
         super.onViewCreated(view, savedInstanceState)
         binding.scroller.setOnScrollChangeListener { _, _, scrollY: Int, _, _ ->
             if (scrollY > 2000) {
-                viewModel.showFab()
+                viewModel.scrollLivedata.postValue(true)
             } else {
-                viewModel.hideFab()
+                viewModel.scrollLivedata.postValue(false)
             }
         }
 
@@ -108,7 +110,7 @@ class ZoneFragment(private val zone: Zone) : Fragment(), PlantClickListener {
         val plantFragment = PlantFragment(plant)
         activity?.supportFragmentManager?.beginTransaction()
             ?.replace(R.id.root_container, plantFragment)
-            ?.addToBackStack(plant.F_Name_Latin)
+            ?.addToBackStack(plant.name)
             ?.commitAllowingStateLoss()
     }
 }

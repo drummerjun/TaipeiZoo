@@ -41,6 +41,16 @@ data class Plant(
     val _full_count: String?,
     val _id: Int?,
     val rank: Double?,
-    @JsonProperty(" F_Name_Ch")
     val F_Name_Ch: String?
-)
+) {
+    val name: String
+        get() = if(F_Name_Ch.isNullOrBlank()) {
+            if (F_Name_Latin.isNullOrBlank()) {
+                "Botany101"
+            } else {
+                F_Name_Latin
+            }
+        } else {
+            F_Name_Ch
+        }
+}

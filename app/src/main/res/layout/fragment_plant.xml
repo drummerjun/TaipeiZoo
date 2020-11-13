@@ -23,7 +23,8 @@
                 android:layout_height="240dp"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
             <TextView android:id="@+id/plant_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +32,8 @@
                 android:paddingTop="16dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:text="@{TextUtils.isEmpty(plant.f_Name_Ch) ? plant.f_Name_Latin : plant.f_Name_Ch}"
+                android:text="@{plant.name}"
+                android:visibility="@{TextUtils.isEmpty(plant.name) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/plant_image"/>
             <TextView android:id="@+id/plant_name_en"
                 android:layout_width="match_parent"
@@ -41,6 +43,7 @@
                 android:textSize="16sp"
                 android:textStyle="italic"
                 android:text="@{plant.f_Name_En}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Name_En) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/plant_name"/>
             <TextView android:id="@+id/aka"
                 android:layout_width="match_parent"
@@ -48,6 +51,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@{context.getString(R.string.aka, plant.f_AlsoKnown)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Name_En) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/plant_name_en"/>
             <TextView android:id="@+id/brief"
                 android:layout_width="match_parent"
@@ -55,6 +59,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@{context.getString(R.string.brief, plant.f_Brief)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Brief) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/aka"/>
             <TextView android:id="@+id/family"
                 android:layout_width="match_parent"
@@ -62,6 +67,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@{context.getString(R.string.family, plant.f_Family)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Family) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/brief"/>
             <TextView android:id="@+id/genus"
                 android:layout_width="match_parent"
@@ -69,6 +75,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@{context.getString(R.string.genus, plant.f_Genus)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Genus) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/family"/>
             <TextView android:id="@+id/features"
                 android:layout_width="match_parent"
@@ -76,6 +83,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@{String.format(@string/features, plant.f_Feature)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Feature) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/genus"/>
             <TextView android:id="@+id/usage"
                 android:layout_width="match_parent"
@@ -91,6 +99,7 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp"
                 android:text="@{String.format(@string/updated, plant.f_Update)}"
+                android:visibility="@{TextUtils.isEmpty(plant.f_Update) ? View.GONE : View.VISIBLE}"
                 app:layout_constraintTop_toBottomOf="@id/usage"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

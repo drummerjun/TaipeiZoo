@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,14 +34,15 @@ class MainFragment(private val zones: ArrayList<Zone>) : Fragment(), ZoneClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(ZooViewModel::class.java)
-        viewModel.setFabClickListener(object : ZooViewModel.FabClickListener {
-            override fun scrollToTop() {
-                binding.zoneList.scrollToPosition(0)
-            }
-        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewModel.clickLivedata.observe(viewLifecycleOwner, Observer { clicked ->
+            if (clicked) {
+                binding.zoneList.scrollToPosition(0)
+            }
+        })
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -69,9 +71,9 @@ class MainFragment(private val zones: ArrayList<Zone>) : Fragment(), ZoneClickLi
                     super.onScrolled(recyclerView, dx, dy)
                     val firstVisible = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     if (firstVisible > 2) {
-                        viewModel.showFab()
+                        viewModel.scrollLivedata.postValue(true)
                     } else {
-                        viewModel.hideFab()
+                        viewModel.scrollLivedata.postValue(false)
                     }
                 }
             })
@@ -79,7 +81,7 @@ class MainFragment(private val zones: ArrayList<Zone>) : Fragment(), ZoneClickLi
     }
 
     override fun onZoneClicked(position: Int) {
-        viewModel.hideFab()
+        viewModel.scrollLivedata.postValue(false)
         val zoneFragment = ZoneFragment(zones[position])
         activity?.supportFragmentManager?.beginTransaction()
             ?.replace(R.id.root_container, zoneFragment)
